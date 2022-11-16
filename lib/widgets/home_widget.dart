@@ -1,4 +1,8 @@
+import 'package:contactlist/providers/contact_provider.dart';
+import 'package:contactlist/screens/contact_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -8,6 +12,16 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  static const List<String> list = <String>['Delete', 'Add to Favorite'];
+  String dropdownValue = list.first;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  getContact() async => await context.read<ContactProvider>().fetchContact();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,33 +53,55 @@ class _HomeWidgetState extends State<HomeWidget> {
                   itemCount: 80,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(builder: (context) {
+                            return const ContactScreen();
+                          }),
+                        );
+                      },
                       contentPadding:
                           const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 5.0),
-                      leading: Image.asset(
-                        "assets/images/add-user.png",
-                        height: 45.0,
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.asset(
+                          "assets/images/Starr.jpeg",
+                          height: 50.0,
+                        ),
                       ),
                       title: const Text(
                         "Ayra Starr",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 15.0,
                         ),
                       ),
                       subtitle: const Text(
                         "+234 702 688 1411",
                       ),
-                      trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                      // trailing: DropdownButton(
-                      //   items: const [
-                      //     DropdownMenuItem(
-                      //       child: Text("View Contacts"),
-                      //     ),
-                      //     DropdownMenuItem(
-                      //       child: Text("Add favorite"),
-                      //     ),
-                      //   ],
-                      //   onChanged: (value) {},
-                      // ),
+                      trailing: DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.black),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.black,
+                        ),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     );
                   }),
             ),

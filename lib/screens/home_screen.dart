@@ -25,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text(
           "My contacts",
-          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.blue,
       ),
       body: _myWidgets[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
