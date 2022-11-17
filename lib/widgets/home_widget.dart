@@ -1,6 +1,4 @@
 import 'package:contactlist/providers/contact_provider.dart';
-import 'package:contactlist/screens/contact_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +40,8 @@ class _HomeWidgetState extends State<HomeWidget> {
               ),
               child: TextField(
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(36))),
                   suffixIcon: Icon(Icons.search_rounded),
                   hintText: "search contacts",
                 ),
@@ -51,62 +51,77 @@ class _HomeWidgetState extends State<HomeWidget> {
               height: 10.0,
             ),
             // This will be housing a list of contacts
+            // Expanded(
+            //   child: ListView.builder(
+            //       itemCount: mylist.length,
+            //       itemBuilder: (context, index) {
+            //         return ListTile(
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               CupertinoPageRoute(builder: (context) {
+            //                 return const ContactScreen();
+            //               }),
+            //             );
+            //           },
+            //           contentPadding:
+            //               const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 5.0),
+            //           leading: ClipRRect(
+            //             borderRadius: BorderRadius.circular(30),
+            //             child: Image.asset(
+            //               "assets/images/Starr.jpeg",
+            //               height: 50.0,
+            //             ),
+            //           ),
+            //           title: Text(
+            //             mylist[index].name,
+            //             style: const TextStyle(
+            //               fontSize: 15.0,
+            //             ),
+            //           ),
+            //           subtitle: Text(
+            //             mylist[index].phoneNumber,
+            //           ),
+            //           trailing: DropdownButton<String>(
+            //             value: dropdownValue,
+            //             icon: const Icon(Icons.arrow_drop_down),
+            //             elevation: 16,
+            //             style: const TextStyle(color: Colors.black),
+            //             underline: Container(
+            //               height: 2,
+            //               color: Colors.black,
+            //             ),
+            //             onChanged: (String? value) {
+            //               // This is called when the user selects an item.
+            //               setState(() {
+            //                 dropdownValue = value!;
+            //               });
+            //             },
+            //             items:
+            //                 list.map<DropdownMenuItem<String>>((String value) {
+            //               return DropdownMenuItem<String>(
+            //                 value: value,
+            //                 child: Text(value),
+            //               );
+            //             }).toList(),
+            //           ),
+            //         );
+            //       }),
+            // ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: mylist.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(builder: (context) {
-                            return const ContactScreen();
-                          }),
-                        );
-                      },
-                      contentPadding:
-                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 5.0),
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.asset(
-                          "assets/images/Starr.jpeg",
-                          height: 50.0,
-                        ),
-                      ),
-                      title: Text(
-                        mylist[index].name,
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      subtitle: Text(
-                        mylist[index].phoneNumber,
-                      ),
-                      trailing: DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.black),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.black,
-                        ),
-                        onChanged: (String? value) {
-                          // This is called when the user selects an item.
-                          setState(() {
-                            dropdownValue = value!;
-                          });
-                        },
-                        items:
-                            list.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  }),
+              child: ListView(
+                children: mylist.map((e) {
+                  return ListTile(
+                    leading: Image.asset(
+                      "assets/images/add-user.png",
+                      height: 40.0,
+                    ),
+                    title: Text(e.name),
+                    subtitle: Text(e.phoneNumber),
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
