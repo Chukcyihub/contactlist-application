@@ -12,18 +12,21 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  static const List<String> list = <String>['Delete', 'Add to Favorite'];
+  static const List<String> list = <String>['Remove', 'Add to Favorite'];
   String dropdownValue = list.first;
 
   @override
   void initState() {
     super.initState();
+    getContact();
   }
 
-  getContact() async => await context.read<ContactProvider>().fetchContact();
+  getContact() async =>
+      await context.read<ContactProvider>().fetchContact(context);
 
   @override
   Widget build(BuildContext context) {
+    var mylist = Provider.of<ContactProvider>(context).apiContact;
     return SafeArea(
       child: Center(
         child: Column(
@@ -50,7 +53,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             // This will be housing a list of contacts
             Expanded(
               child: ListView.builder(
-                  itemCount: 80,
+                  itemCount: mylist.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {
@@ -70,14 +73,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                           height: 50.0,
                         ),
                       ),
-                      title: const Text(
-                        "Ayra Starr",
-                        style: TextStyle(
+                      title: Text(
+                        mylist[index].name,
+                        style: const TextStyle(
                           fontSize: 15.0,
                         ),
                       ),
-                      subtitle: const Text(
-                        "+234 702 688 1411",
+                      subtitle: Text(
+                        mylist[index].phoneNumber,
                       ),
                       trailing: DropdownButton<String>(
                         value: dropdownValue,

@@ -19,7 +19,7 @@ class ContactProvider with ChangeNotifier {
   /// method to fetch contact from the internet
   /// return null
   ///
-  Future<void> fetchContact() async {
+  Future<void> fetchContact(BuildContext context) async {
     try {
       final resp = await http.get(
         Uri.parse("https://jsonplaceholder.typicode.com/users"),
@@ -45,14 +45,16 @@ class ContactProvider with ChangeNotifier {
             ),
           );
         }
+      } else {
+        print("Could not fetch data from the internet");
       }
     } on SocketException {
       //return a snackbar with the message, no internet access
-      // const snack = SnackBar(
-      //   content: Text("No Internet Access"),
-      //   duration: Duration(seconds: 5),
-      // );
-      // ScaffoldMessenger.of(_).showSnackBar(snack);
+      const snack = SnackBar(
+        content: Text("No Internet Access"),
+        duration: Duration(seconds: 5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snack);
     }
     notifyListeners();
   }

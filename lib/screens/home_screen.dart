@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   _setindex(int index) => setState(() => _selectedIndex = index);
   final List<Widget> _myWidgets = const [
     HomeWidget(),
