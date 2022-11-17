@@ -1,4 +1,6 @@
 import 'package:contactlist/providers/contact_provider.dart';
+import 'package:contactlist/screens/contact_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -111,7 +113,22 @@ class _HomeWidgetState extends State<HomeWidget> {
             Expanded(
               child: ListView(
                 children: mylist.map((e) {
+                  // return Container(
+                  //   child: Column(children: [
+                  //     Text(e.email),
+                  //     Text(e.name),
+                  //     Text(e.website)
+                  //   ]),
+                  // );
                   return ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) {
+                          return const ContactScreen();
+                        }),
+                      );
+                    },
                     leading: Image.asset(
                       "assets/images/add-user.png",
                       height: 40.0,
